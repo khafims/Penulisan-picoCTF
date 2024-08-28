@@ -1,1 +1,169 @@
+Verify
 
+**Deskripsi**
+Orang-orang terus mencoba menipu pemain saya dengan bendera tiruan. Saya ingin memastikan mereka mendapatkan yang asli! Saya akan memberikan hash SHA-256 dan skrip dekode untuk membantu Anda mengetahui bahwa bendera saya sah.
+
+Anda dapat mengunduh file tantangan di sini:
+
+challenge.zip  
+File yang sama dapat diakses melalui SSH di sini:  
+`ssh -p 60327 ctf-player@rhea.picoctf.net`  
+Menggunakan kata sandi `6dd28e9b`. Terima sidik jari dengan yes, dan jalankan `ls` setelah terhubung untuk memulai. Ingat, di shell, kata sandi tersembunyi!
+
+**Checksum:**
+`03b52eabed517324828b9e09cbbf8a7b0911f348f`  
+`76cf989ba6d51acede6d5d8`
+
+Untuk mendekode file setelah Anda memverifikasi hash, jalankan `./decrypt.sh files/`.
+
+---
+
+**Solusi**
+Untuk mendapatkan file: `wget https://artifacts.picoctf.net/c_rhea/12/challenge.zip`, lalu unzip `challenge.zip`. Catatan: File juga dapat diakses dengan ssh yang disediakan di deskripsi. Gunakan `cd home/ctf-player/drop-in` untuk menuju ke file.
+
+Saat Anda menggunakan `ls`, Anda dapat melihat tiga hal: `checksum.txt`, `decrypt.sh`, dan direktori `files`. Dengan menggunakan `cat checksum.txt`, Anda dapat melihat hash SHA256 dari yang asli. Di dalam direktori `files`, ada 301 file dengan 8 nama acak karakter, semuanya memiliki checksum dan konten yang berbeda. Terakhir, `decrypt.sh` adalah skrip yang disediakan yang dapat digunakan pada file yang benar untuk mendapatkan bendera.
+
+Jika salah satu checksum dari file di dalam direktori `files` cocok dengan checksum yang diberikan oleh `checksum.txt`, maka file itu, jika digunakan dengan skrip dekode, akan memberikan bendera.
+
+**Isi dari checksum.txt:**  
+`03b52eabed517324828b9e09cbbf8a7b0911f348f76cf989ba6d51acede6d5d8`
+
+Perintah `sha256sum` dapat digunakan pada file untuk mendapatkan checksum. Untuk mendapatkan checksum dari semua file dalam direktori, perintah `sha256sum files/*` dapat digunakan. Ketika dipasangkan dengan perintah `grep` dengan checksum SHA256 yang diketahui yang perlu ditemukan, file yang benar akan ditampilkan.
+
+**Perintah:**  
+```bash
+sha256sum files/* | grep 03b52eabed517324828b9e09cbbf8a7b0911f348f76cf989ba6d51acede6d5d8
+```
+
+**Output:**  
+`03b52eabed517324828b9e09cbbf8a7b0911f348f76cf989ba6d51acede6d5d8  files/00011a60`
+
+Terakhir, skrip dekode dapat dijalankan dengan perintah `./decrypt.sh files/00011a60`, yang akan memberikan bendera.
+
+Perhatikan bahwa jika Anda tidak ssh'd ke dalam atau tidak berada di folder yang benar, skrip harus dimodifikasi. Sebagai alternatif, perintah dari skrip dapat dijalankan:
+
+```bash
+openssl enc -d -aes-256-cbc -pbkdf2 -iter 100000 -salt -in files/00011a60 -k picoCTF
+```
+
+Metode lain untuk melakukannya adalah dengan mencoba mendekode setiap file untuk mendapatkan bendera:
+
+```bash
+for file in files/*; do openssl enc -d -aes-256-cbc -pbkdf2 -iter 100000 -salt -in "$file" -k picoCTF; done > flag.txt
+```
+
+Ini akan mengiterasi melalui setiap file di direktori `files/` dan mendekode. Jika berhasil, hasilnya akan disimpan ke dalam file `flag.txt`. Dengan menggunakan `cat flag.txt`, bendera dapat dilihat.
+
+**Bendera:** `picoCTF{trust_but_verify_0...}`
+
+---
+
+Scan Suprise
+
+**Deskripsi**
+Saya sudah bosan memberikan bendera sebagai teks. Bukankah akan keren jika bendera itu adalah gambar?
+
+Anda dapat mengunduh file tantangan di sini:
+
+challenge.zip  
+File yang sama dapat diakses melalui SSH di sini:  
+`ssh -p 55235 ctf-player@atlas.picoctf.net`  
+Menggunakan kata sandi `6dd28e9b`. Terima sidik jari dengan yes, dan jalankan `ls` setelah terhubung untuk memulai. Ingat, di shell, kata sandi tersembunyi!
+
+---
+
+**Solusi**
+Untuk mendapatkan file: `wget https://artifacts.picoctf.net/c_atlas/3/challenge.zip`, lalu unzip `challenge.zip`. Catatan: File juga dapat diakses dengan ssh yang disediakan di deskripsi. Gunakan `cd home/ctf-player/drop-in` untuk menuju ke `flag.png`.
+
+Setelah berada di sana, Anda dapat membuka gambar dan menggunakan ponsel untuk memindai kode QR dan mendapatkan bendera. Meskipun ini juga dapat dilakukan di Linux dengan menggunakan `zbar-tools`.
+
+Pertama, instal paket dengan perintah `sudo apt install zbar-tools`, kemudian untuk menggunakannya jalankan perintah berikut:  
+```bash
+zbarimg flag.png
+```
+
+**Bendera:** `picoCTF{p33k_@_b00_a81...}`
+
+Secret of the Polyglot
+
+**Deskripsi**
+Pusat Operasi Jaringan (NOC) di institusi lokal Anda menemukan file mencurigakan dan mendapatkan informasi yang bertentangan tentang jenis file tersebut. Mereka meminta Anda sebagai pakar eksternal untuk memeriksa file tersebut. Bisakah Anda mengekstrak semua informasi dari file aneh ini?
+
+Unduh file mencurigakan di sini: `wget https://artifacts.picoctf.net/c_titan/9/flag2of2-final.pdf`
+
+---
+
+**Solusi**
+1. Pertama, buka file tersebut sebagai PDF untuk mendapatkan bagian kedua dari bendera. Ini dapat dilakukan melalui command line dengan perintah `pdftotext`.
+
+   - Instal `poppler-utils` terlebih dahulu dengan perintah:  
+   ```bash
+   sudo apt install poppler-utils
+   ```
+   - Kemudian jalankan perintah:  
+   ```bash
+   pdftotext flag2of2-final.pdf
+   ```
+   - Setelah itu, untuk mendapatkan bendera, gunakan perintah:  
+   ```bash
+   cat flag2of2-final.txt
+   ```
+   Ini akan menghasilkan teks: `1n_pn9_&_pdf_7f9...}`
+
+2. Saat melihat file dengan `cat flag2of2-final.pdf`, melihat melalui hex, atau menjalankan perintah `file` dengan:  
+   ```bash
+   file flag2of2-final.pdf
+   ```
+   Anda dapat melihat bahwa byte magic menunjukkan file ini sebenarnya adalah PNG. Ubah nama file dengan perintah:  
+   ```bash
+   mv flag2of2-final.pdf flag2of2-final.png
+   ```
+   File tersebut kemudian dapat dibuka sebagai PNG, dan bagian pertama dari bendera dapat dibaca.
+
+3. Untuk melakukannya melalui command line, Anda dapat menggunakan alat Optical Character Recognition (OCR). 
+   
+   - Instal OCR yang terkenal dengan perintah:  
+   ```bash
+   sudo apt install gocr
+   ```
+   - Kemudian jalankan perintah berikut untuk menghapus baris baru dan menempelkan isinya:  
+   ```bash
+   gocr flag2of2-final.png | tr -d "\n"
+   ```
+   Ini akan menghasilkan `piconF{f1u3n7_`, yang hampir benar, kecuali mengenali "n" sebagai "CT". Keseluruhan bendera seharusnya adalah:  
+   `picoCTF{f1u3n7_1n_pn9_&_pdf_7f9...}`
+
+**Bendera:** `picoCTF{f1u3n7_1n_pn9_&_pdf_7f9...}`
+
+CanYouSee
+
+**Deskripsi**
+Bagaimana kalau bermain petak umpet?  
+Unduh file ini di sini: `wget https://artifacts.picoctf.net/c_titan/6/unknown.zip`, lalu ekstrak file `unknown.zip`.
+
+---
+
+**Solusi**
+1. Jalankan perintah berikut untuk mengekstrak file:
+   ```bash
+   unzip unknown.zip
+   ```
+
+2. Setelah file diekstrak, Anda akan mendapatkan file gambar `ukn_reality.jpg`. Jalankan `exiftool` pada file gambar tersebut untuk memeriksa metadata:
+   ```bash
+   exiftool ukn_reality.jpg
+   ```
+
+3. Di bagian **Attribution URL**, terdapat teks yang terlihat seperti Base64 encoded (cGljb0NURntNRTc0RDQ3QV9ISUREM05fYTZkZjhkYjh9Cg==). Masukkan teks tersebut ke dalam **CyberChef** untuk melakukan decoding Base64, dan Anda akan menemukan bendera.
+
+4. Anda juga dapat menemukan bendera dengan satu perintah berikut:
+   ```bash
+   exiftool ukn_reality.jpg | grep At | cut -d ":" -f2 | tr -d " " | base64 -d
+   ```
+
+   - **grep At**: Menemukan baris **Attribution URL**.
+   - **cut -d ":" -f2**: Menggunakan tanda titik dua (:) sebagai pemisah dan mengambil field kedua.
+   - **tr -d " "**: Menghapus spasi yang ada.
+   - **base64 -d**: Melakukan decoding Base64 untuk mendapatkan bendera.
+
+**Bendera:** `picoCTF{ME74D47A_HIDD3N_a6d...}`
