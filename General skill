@@ -1,1 +1,288 @@
 
+**Deskripsi**  
+Apakah Anda ingin bermain sebuah permainan? Saat Anda semakin sering menggunakan shell, Anda mungkin tertarik dengan cara kerjanya! Binary search adalah algoritma klasik yang digunakan untuk menemukan item dalam daftar yang sudah diurutkan dengan cepat. Bisakah Anda menemukan bendera? Anda akan memiliki 1000 kemungkinan dan hanya 10 tebakan.
+
+Keamanan siber sering kali melibatkan banyak data untuk disaring—dari log, laporan kerentanan, hingga forensik. Melatih dasar-dasar secara manual mungkin akan membantu Anda di masa depan ketika Anda harus membuat alat Anda sendiri!
+
+Anda dapat mengunduh file tantangan di sini:
+
+`challenge.zip`  
+ssh -p 53039 ctf-player@atlas.picoctf.net  
+Menggunakan kata sandi `6dd28e9b`. Terima fingerprint dengan "yes", dan gunakan perintah `ls` setelah tersambung untuk memulai. Ingat, di shell, kata sandi disembunyikan!
+
+---
+
+**Solusi**  
+1. SSH ke tantangan berdasarkan instruksi yang diberikan dalam deskripsi:
+   ```bash
+   ssh -p 53039 ctf-player@atlas.picoctf.net
+   ```
+
+2. Setelah tersambung, Anda akan disambut dengan permainan "Binary Search Game!". Permainan ini melibatkan pencarian angka antara 1 dan 1000 menggunakan algoritma binary search.
+
+3. Langkah pertama dalam algoritma binary search adalah selalu menebak angka di tengah, yaitu 500, karena itu adalah nilai tengah antara 1 dan 1000.
+
+4. Setiap kali Anda diberikan petunjuk (lebih rendah atau lebih tinggi), ambil batas bawah yang diketahui dan batas atas yang diketahui, lalu bagi dua untuk mendapatkan tebakan berikutnya.
+
+Contoh urutan:
+```bash
+Enter your guess: 500
+Lower! Try again.
+
+Enter your guess: 250
+Lower! Try again.
+
+Enter your guess: 125
+Lower! Try again.
+
+Enter your guess: 63
+Lower! Try again.
+
+Enter your guess: 32
+Higher! Try again.
+
+Enter your guess: 47
+Lower! Try again.
+
+Enter your guess: 39
+Lower! Try again.
+
+Enter your guess: 36
+Higher! Try again.
+
+Enter your guess: 38
+Congratulations! You guessed the correct number: 38
+```
+
+**Bendera:** `picoCTF{g00d_gu355_de95...}`
+
+
+**Deskripsi**  
+Apa yang terakhir saya kerjakan? Saya ingat menulis catatan untuk membantu saya mengingat...
+
+Anda dapat mengunduh file tantangan di sini:
+
+`challenge.zip`
+
+---
+
+**Solusi**  
+1. Unduh file tantangan:
+   ```bash
+   wget https://artifacts.picoctf.net/c_titan/68/challenge.zip
+   ```
+
+2. Ekstrak file zip dan pindah ke direktori yang dihasilkan:
+   ```bash
+   unzip challenge.zip
+   cd drop-in/
+   ```
+
+3. Gunakan perintah `git log` untuk melihat riwayat commit. Salah satu commit menunjukkan pesan bendera.
+
+   ```bash
+   git log
+   ```
+
+4. Temukan commit yang berisi pesan bendera, dan tampilkan isinya.
+
+**Bendera:** `picoCTF{t1m3m@ch1n3_b476...}`
+
+---
+
+**Deskripsi**  
+Menggunakan Secure Shell (SSH) akan sangat penting. Bisakah Anda SSH sebagai `ctf-player` ke `titan.picoctf.net` pada port 65080 untuk mendapatkan bendera? Anda juga akan memerlukan kata sandi `6dd28e9b`. Jika diminta, terima fingerprint dengan "yes". Jika perangkat Anda tidak memiliki shell, Anda dapat menggunakan: [Webshell](https://webshell.picoctf.org).
+
+---
+
+**Solusi**  
+1. SSH ke server dengan perintah berikut:
+   ```bash
+   ssh -p 65080 ctf-player@titan.picoctf.net
+   ```
+
+2. Ketika diminta, ketik "yes" untuk menerima fingerprint dan masukkan kata sandi `6dd28e9b`.
+
+**Bendera:** `picoCTF{s3cur3_c0nn3ct10n_5d...}`
+
+---
+
+**Deskripsi**  
+Tahu tentang little endian dan big endian? 
+
+```bash
+nc titan.picoctf.net 61087
+```
+
+---
+
+**Solusi**  
+1. Hubungkan ke server dengan perintah:
+   ```bash
+   nc titan.picoctf.net 61087
+   ```
+
+2. Anda akan diberikan kata, dalam hal ini "ffoxf". Gunakan CyberChef untuk mengonversi kata tersebut ke hex, yang akan memberikan representasi Big Endian dari kata tersebut:
+   ```
+   Big Endian: 66666f7866
+   ```
+
+3. Konversi representasi Big Endian ke Little Endian dengan membalik urutan:
+   ```
+   Little Endian: 66786F6666
+   ```
+
+**Bendera:** `picoCTF{3ndi4n_sw4p_su33ess_d58...}`
+
+---
+
+**Deskripsi**  
+Saya tidak sengaja menulis bendera. Untung saya sudah menghapusnya!
+
+Anda dapat mengunduh file tantangan di sini:
+
+`challenge.zip`
+
+---
+
+**Solusi**  
+1. Unduh file tantangan:
+   ```bash
+   wget https://artifacts.picoctf.net/c_titan/77/challenge.zip
+   ```
+
+2. Ekstrak file zip dan pindah ke direktori yang dihasilkan:
+   ```bash
+   unzip challenge.zip
+   cd drop-in/
+   ```
+
+3. Gunakan `git log` untuk melihat riwayat commit. Temukan commit yang menunjukkan pesan bendera dan periksa isi file pada commit tersebut:
+   ```bash
+   git log
+   git checkout <commit-id>
+   cat message.txt
+   ```
+
+**Bendera:** `picoCTF{s@n1t1z3_30e86...}`
+
+---
+
+**Deskripsi**  
+Tim saya telah bekerja keras pada fitur baru untuk program pencetak bendera kami! Saya bertanya-tanya bagaimana semuanya akan bekerja bersama?
+
+Anda dapat mengunduh file tantangan di sini:
+
+`challenge.zip`
+
+---
+
+**Solusi**  
+1. Unduh file tantangan:
+   ```bash
+   wget https://artifacts.picoctf.net/c_titan/71/challenge.zip
+   ```
+
+2. Ekstrak file zip dan pindah ke direktori yang dihasilkan:
+   ```bash
+   unzip challenge.zip
+   cd drop-in/
+   ```
+
+3. Gunakan `git branch -a` untuk melihat semua cabang yang ada. Ada tiga cabang fitur yang masing-masing berisi bagian dari bendera. Anda dapat memeriksa masing-masing cabang atau menggabungkan semuanya ke cabang utama dan menyelesaikan konflik merge.
+
+   ```bash
+   git checkout feature/part-1 && cat flag.py
+   git checkout feature/part-2 && cat flag.py
+   git checkout feature/part-3 && cat flag.py
+   ```
+
+**Bendera:** `picoCTF{t3@mw0rk_m@k3s_th3_dr3@m_w0rk_4c2...}`
+
+---
+
+**Deskripsi**  
+Beberapa commit tampaknya menghalangi program untuk bekerja. Siapa yang melakukannya?
+
+Anda dapat mengunduh file tantangan di sini:
+
+`challenge.zip`
+
+---
+
+**Solusi**  
+1. Unduh file tantangan:
+   ```bash
+   wget https://artifacts.picoctf.net/c_titan/74/challenge.zip
+   ```
+
+2. Ekstrak file zip dan pindah ke direktori yang dihasilkan:
+   ```bash
+   unzip challenge.zip
+   cd drop-in/
+   ```
+
+3. Gunakan `git log` untuk file tertentu untuk melihat siapa yang menyebabkan masalah, dalam hal ini adalah `message.py`:
+   ```bash
+   git log message.py
+   ```
+
+**Bendera:** `picoCTF{@sk_th3_1nt3rn_ea3...}`
+
+---
+
+**Deskripsi**  
+Seberapa baik Anda dapat melakukan operasi biner dasar? Mulailah mencari bendera di sini `nc titan.picoctf.net 62817`
+
+---
+
+**Solusi**  
+1. Hubungkan ke server dengan perintah:
+   ```bash
+   nc titan.picoctf.net 62817
+   ```
+
+2. Anda akan diberikan serangkaian 6 pertanyaan tentang operasi biner pada dua angka biner. Operasi yang perlu dilakukan meliputi AND, OR, AND, LEFT SHIFT, ADD, dan RIGHT SHIFT.
+
+   Contoh angka biner:
+   ```
+   Binary Number 1: 11010100
+   Binary Number 2: 00100001
+   ```
+
+   - Operasi `&` (AND):
+     ```bash
+     00000000
+     ```
+
+   - Operasi `|` (OR):
+     ```bash
+     11110101
+     ```
+
+   - Operasi `*` (MULTIPLY):
+     ```bash
+     1101101010100
+     ```
+
+   - Operasi `<<` (LEFT SHIFT):
+     ```bash
+     110101000
+     ```
+
+   - Operasi `+` (ADD):
+     ```bash
+     11110101
+     ```
+
+   - Operasi `>>` (RIGHT SHIFT):
+     ```bash
+     10000
+     ```
+
+   - Konversi hasil dari operasi terakhir ke hexadecimal:
+     ```bash
+     10000 (binary) = 10 (hexadecimal)
+     ```
+
+**Bendera:** `picoCTF{b1tw^3se_0p3eR@tI0n_su33essFuL_aea...}`
