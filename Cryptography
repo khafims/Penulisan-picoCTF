@@ -1,1 +1,25 @@
+interencdec
 
+**Deskripsi**
+Bisakah Anda menemukan makna sebenarnya dari file ini?
+Unduh filenya di sini.
+
+**Solusi**
+Untuk mendapatkan file: `wget https://artifacts.picoctf.net/c_titan/3/enc_flag`
+
+Dengan menggunakan perintah `cat enc_flag`, Anda akan mendapatkan teks yang telah dikodekan: `YidkM0JxZGtwQlRYdHFhR3g2YUhsZmF6TnFlVGwzWVROclgya3lNRFJvYTJvMmZRPT0nCg==`.
+
+Metode pertama adalah dengan menggunakan CyberChef untuk mendekode teks ini. Saat Anda memasukkannya, Anda akan mengenali bahwa ini adalah Base64 karena adanya padding atau filter ajaib yang akan mengenalinya untuk Anda. Ini kemudian akan memberikan teks ini: `b'd3BqdkpBTXtqaGx6aHlfazNqeTl3YTNrX2kyMDRoa2o2fQ=='`.
+
+Di CyberChef, Anda dapat menggunakan fungsi "Drop Bytes" untuk menghapus `b'` dan `'` yang mengelilingi Base64, atau Anda cukup menyalin dan menempelkannya untuk melalui dekoding Base64 lagi. Ini kemudian akan memberikan teks ini: `wpjvJAM{jhlzhy_k3jy9wa3k_i204hkj6}`. Ini sangat mirip dengan format flag (`picoCTF{}`), jadi kemungkinan ini adalah cipher rotasi. Dengan menerapkan fungsi "ROT13 Brute Force" dan kemudian menggunakan "control-f" untuk menemukan "picoCTF", flag tersebut akan ditampilkan.
+
+Di baris perintah, ini dapat dilakukan dengan perintah berikut: 
+```bash
+cat enc_flag | base64 -d | cut -d "'" -f2 | base64 -d | caesar
+```
+Perintah Caesar berasal dari bsdgames dan dapat diinstal seperti ini pada distribusi Linux berbasis Debian:
+```bash
+sudo apt install bsdgames
+```
+
+**Bendera:** `picoCTF{caesar_d3cr9pt3d_b20...}`
